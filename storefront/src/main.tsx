@@ -27,6 +27,8 @@ import {CoffeeDuel} from './components/CoffeeDuel';
 import {neutralBrew,normalizeExploration,waterFor,filterFor} from '../../backend/src/lib/brew-exploration.ts';
 
 import './coffee-pack.css';
+import './hosting.css';
+if(!['localhost','127.0.0.1','[::1]'].includes(location.hostname))document.documentElement.classList.add('hosted-storefront');
 type View='shop'|'duel'|'lab'|'journal'|'passport'|'checkout'|'orders'|'favorites';
 type CartItem={key:string;coffeeId:string;weight:number;grind:string;quantity:number};
 function read<T,>(key:string,fallback:T):T {try{const value=localStorage.getItem(key);return value?JSON.parse(value):fallback;}catch{return fallback;}}
