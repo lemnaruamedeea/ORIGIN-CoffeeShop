@@ -1,0 +1,56 @@
+/* Responsive corrections kept after the shared desktop styles. */
+.feature-loading{padding:32px 6%;min-height:120px;color:var(--muted);font-size:14px}
+@media(max-width:1180px) and (min-width:721px){
+  .header{height:auto;min-height:118px;display:grid;grid-template-columns:1fr auto;gap:8px 20px;padding-top:16px}
+  .header nav{grid-row:2;grid-column:1/-1;height:48px;justify-content:space-between;gap:16px;min-width:0;overflow-x:auto}
+  .header nav button{height:48px;font-size:12px;flex-shrink:0}
+  .header nav button.active:after{bottom:0}
+}
+@media(max-width:720px){
+  .header{min-width:0;padding-inline:6%;min-height:112px}
+  .header>*{min-width:0}
+  .header nav{width:100%;min-width:0;justify-content:flex-start;gap:22px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:#c6bba6 transparent;height:48px}
+  .header nav button{flex:0 0 auto;min-height:44px;height:44px;font-size:12px}
+  .header-actions{gap:12px}
+  .account-button,.cart-button{min-height:44px}
+  .hero h1{font-size:clamp(43px,12.5vw,58px);letter-spacing:-1px;line-height:1.08;text-wrap:balance}
+  .hero-copy{padding:30px 6%}
+  .hero-copy>p{font-size:14px;line-height:1.7;max-width:36ch}
+  .hero-actions{gap:12px 20px}
+  .hero .btn,.hero .text-link{min-height:44px;font-size:12px}
+  .hero .btn{padding:14px 16px}
+  .hero-note{font-size:11px;line-height:1.5}
+  .hero-art{height:350px;min-height:350px}
+  .hero-art:after{display:none}
+  .hero-stamp{top:19px;left:16px;right:16px;text-align:center;font-size:8px;letter-spacing:1px}
+  .hero-stamp br{display:none}
+  .hero-stamp strong{margin-left:8px;font-size:19px;white-space:nowrap}
+  .hero-product{top:78px;left:14%;transform:rotate(-8deg) scale(.78);transform-origin:top left}
+  .hero-cup{width:145px;height:145px;right:5%;bottom:24px;filter:none}
+  .orbit-one{width:300px;height:300px;left:calc(50% - 150px);top:42px}
+  .orbit-two{width:240px;height:240px;left:calc(50% - 120px);top:72px}
+  .floating-note{display:none}
+  .hero-coordinate{font-size:6px;bottom:10px;right:5%;letter-spacing:.7px}
+  .discovery-strip>button{min-height:88px}
+  .discovery-strip>button>div{min-width:0}
+  .discovery-strip b{font-size:14px}
+  .discovery-strip small{font-size:11px;line-height:1.5}
+  .discovery-strip svg{flex-shrink:0}
+  .barista-launch,.hosted-storefront .barista-launch{width:52px;height:52px;padding:5px;right:16px;bottom:calc(20px + env(safe-area-inset-bottom));justify-content:center}
+  .hosted-storefront .barista-launch{bottom:calc(76px + env(safe-area-inset-bottom))}
+  .barista-launch>span{width:40px;height:40px}
+  .barista-launch>div,.barista-launch>b{display:none}
+  footer{padding-bottom:calc(150px + env(safe-area-inset-bottom))}
+  .chat-modal{bottom:calc(10px + env(safe-area-inset-bottom))}
+  input:not([type=range]):not([type=checkbox]):not([type=radio]),select,textarea{font-size:16px}
+}
+@media(max-width:360px){
+  .wordmark{width:auto;font-size:25px}
+  .wordmark small{font-size:5px;letter-spacing:1.5px}
+  .header-actions{gap:8px}
+  .hero-actions{align-items:stretch}
+  .hero .btn{width:100%;justify-content:center}
+  .hero .text-link{justify-content:center;width:100%}
+  .hero-product{left:11%}
+  .hero-cup{width:132px;height:132px;right:3%}
+}
