@@ -1,25 +1,21 @@
 # ORIGIN CoffeeShop
 
-Magazin de cafea și accesorii, cu React, TypeScript, Vite, Medusa și PostgreSQL. Include AI Barista, Coffee Duel, Brew Lab interactiv, jurnal, pașaport, Mystery Tasting, favorite, recenzii, conturi, checkout guest și Stripe Sandbox.
+ORIGIN este un magazin online de cafea de specialitate și accesorii, în care descoperirea gustului face parte din experiența de cumpărare. Explorează originile cafelelor, găsește aromele care ți se potrivesc și experimentează cu propriile rețete.
 
-## Publicare
+**[Vizitează magazinul →](https://origin-coffeeshop.netlify.app/)**
 
-- Netlify publică `storefront/dist`; configurația este în `netlify.toml`. Build: `npm run build`, directorul de bază rămâne rădăcina repository-ului.
-- Render rulează backendul prin `backend/Dockerfile`, folosind o bază PostgreSQL Neon separată. Modelul gratuit este definit în `render.yaml`.
-- Funcția Netlify `api-proxy` transmite `/api/*` la backend și păstrează cookie-urile HttpOnly pe domeniul magazinului. Configurează `ORIGIN_BACKEND_URL` în Netlify după crearea serviciului Render.
-- Pentru e-mail, Render trimite cereri semnate HTTPS la funcția Netlify `send-mail`; parola de aplicație Gmail se configurează numai în Netlify. `MAIL_RELAY_SECRET` trebuie să fie identic pe cele două servicii și să aibă cel puțin 32 de caractere. Relay-ul nu acceptă mesaje fără semnătură validă.
-- La prima pornire se creează catalogul fictiv, stocurile inițiale și tabelele aplicației. Baza de date locală, conturile clienților și comenzile locale nu sunt importate. Datele deja existente în baza găzduită nu sunt înlocuite la restart.
-- Configurează un `ADMIN_EMAIL` și un `ADMIN_PASSWORD` propriu (minimum 12 caractere) în Render. Nu există un administrator public cu parolă implicită. După inițializare, parola administratorului nu este resetată la repornire.
-- Stripe rămâne exclusiv în Sandbox. Configurează un webhook Stripe HTTPS către `https://BACKEND/hooks/payment/stripe_stripe` și secretul său în Render; listenerul local nu este folosit online.
+## Descoperă ORIGIN
 
-Variabilele necesare sunt enumerate în `.env.example` și `backend/.env.example`. Nu introduce secrete în variabile `VITE_*`, Git sau în frontend.
+- **Cafea și accesorii** — catalog cu filtre, fișe de produs, origini, producători și opțiuni de gramaj și măcinătură.
+- **Coffee Duel** — un quiz interactiv care conturează profilul de gust și recomandă cafele potrivite.
+- **Brew Lab** — un laborator vizual în care ajustezi apa, doza, temperatura, măcinătura și filtrul pentru a explora rețete.
+- **AI Barista** — un asistent care explică aromele, recomandă produse și te ajută să îți îmbunătățești prepararea.
+- **Jurnal și pașaport** — păstrează degustările, explorează originile pe hartă și deblochează insigne.
+- **Mystery Tasting** — descoperă trei mostre alese aleatoriu, folosind codurile primite prin e-mail după comandă.
+- **Cont personal** — favorite, recenzii și istoricul comenzilor, cu posibilitatea de a comanda și fără cont.
 
-## Limitări ale planurilor gratuite
+## Tehnologii
 
-Render Free poate opri serviciul după inactivitate; prima accesare poate dura aproximativ un minut. Joburile de e-mail se reiau când backendul este activ. Limitele de RAM și resurse pot afecta Medusa; verificarea unei publicări reușite este necesară înainte de a considera magazinul disponibil. Render Free nu permite SMTP pe porturile Gmail; funcția Netlify evită această limitare prin HTTPS. Fișierele încărcate ulterior în filesystemul Render nu sunt persistente. Imaginile din acest repository sunt statice; pentru uploaduri persistente este necesar un serviciu de obiecte. Neon are limite proprii pentru stocare și utilizare.
+React, TypeScript și Vite pentru interfață; Medusa și Node.js pentru backend; PostgreSQL pentru baza de date. AI Barista folosește Groq, iar plățile sunt integrate prin Stripe. Aplicația este găzduită pe Netlify, Render și Neon.
 
-## Dezvoltare locală
-
-`cd storefront && npm ci && npm run dev`. Backend: `cd backend && npm ci`, configurează variabilele local, apoi folosește scripturile Medusa. Configurația Vite transmite API-ul local la portul 9000.
-
-Catalogul și identitatea comercială sunt fictive, create pentru un proiect academic. Datele geografice ale hărții provin din Natural Earth (domeniu public).
+Proiect academic de comerț electronic B2C. Catalogul și identitatea comercială sunt fictive, iar plățile funcționează exclusiv în Stripe Sandbox. La prima accesare, backendul găzduit gratuit poate avea nevoie de timp pentru pornire.
