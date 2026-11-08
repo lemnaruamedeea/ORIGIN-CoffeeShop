@@ -1,0 +1,14 @@
+/* Fixed print zones keep every label and the footer independent of copy length. */
+.coffee-bag{--label-top:80px;--label-height:136px;--name-slot:57px;--name-size:21px;--long-name-size:16.5px}
+.coffee-bag.hero-bag{--label-top:94px;--label-height:164px;--name-slot:64px;--name-size:27px;--long-name-size:20px}
+.coffee-bag .bag-label{position:absolute;top:var(--label-top);height:var(--label-height);width:128px;margin:0;padding:8px;display:grid;grid-template-rows:8px var(--name-slot) 12px 1px minmax(17px,1fr) 9px;gap:3px;align-items:center;box-sizing:border-box}
+.coffee-bag.hero-bag .bag-label{width:150px;padding:10px;grid-template-rows:8px var(--name-slot) 14px 1px minmax(19px,1fr) 10px;gap:4px}
+.coffee-bag .bag-label>span{display:block;font-size:4.5px;line-height:1.2;letter-spacing:1.2px}
+.coffee-bag .bag-label strong,.coffee-bag .bag-label strong.long-coffee-name{display:flex;align-items:center;justify-content:center;min-width:0;max-width:100%;height:100%;margin:0;font-size:var(--name-size);line-height:1.03;font-weight:400;overflow-wrap:anywhere;text-wrap:balance}
+.coffee-bag .bag-label strong.long-coffee-name{font-size:var(--long-name-size)}
+.coffee-bag .bag-label i{margin:0;font-size:5px;line-height:1.2;min-width:0;overflow-wrap:anywhere}
+.coffee-bag .bag-label .bag-line{width:100%;height:1px;margin:0}
+.coffee-bag .bag-label small{margin:0;font-size:5px;line-height:1.15;min-width:0;overflow-wrap:anywhere}
+.coffee-bag .bag-label b{margin:0;font-size:7px;line-height:1;font-weight:400}
+.coffee-bag .bag-foot{bottom:10px;width:94%;margin:0;text-align:center;line-height:1.3;font-size:3.6px;letter-spacing:.35px;white-space:nowrap}
+.coffee-bag.hero-bag .bag-label>span{font-size:5.5px}.coffee-bag.hero-bag .bag-label i{font-size:6px}.coffee-bag.hero-bag .bag-label small{font-size:6px}.coffee-bag.hero-bag .bag-label b{font-size:8px}.coffee-bag.hero-bag .bag-foot{bottom:13px;font-size:4px}

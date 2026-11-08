@@ -1,0 +1,6 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {orderConfirmation} from '../../backend/src/lib/order-confirmation.ts';
+const order={number:19,address:{first_name:'Ana',last_name:'Popescu',address_1:'Strada Test 1',city:'București',phone:'0700000000'},items:[{quantity:2,title:'Brazil Santos',variant:'250 g',grind:'Boabe',total:90}],subtotal:90,shipping:15,discount:0,tax:0,total:105,paymentMethod:'cash',paymentStatus:'cash_due'};
+test('each order confirmation contains products, quantities, delivery and actual total',()=>{const m=orderConfirmation(order);assert.match(m.subject,/#19/);assert.match(m.text,/2 × Brazil Santos/);assert.match(m.text,/105/);assert.match(m.text,/Strada Test 1/);assert.match(m.text,/ramburs, de achitat/);assert.doesNotMatch(m.text,/cardul: confirmată/);});
+test('card authorized and pending are never described as paid',()=>{assert.match(orderConfirmation({...order,paymentMethod:'stripe',paymentStatus:'authorized'}).text,/autorizată/);assert.match(orderConfirmation({...order,paymentMethod:'stripe',paymentStatus:'pending'}).text,/în verificare/);assert.match(orderConfirmation({...order,paymentMethod:'stripe',paymentStatus:'paid'}).text,/confirmată/);});

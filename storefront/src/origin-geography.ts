@@ -1,0 +1,8 @@
+// Approximate producing-region coordinates [latitude, longitude], not farm locations.
+export const originRegions:Record<string,{label:string;coordinates:[number,number]}>= {
+ ET:{label:'Etiopia',coordinates:[5.8,38.9]},BR:{label:'Brazilia',coordinates:[-21,-47]},CO:{label:'Columbia',coordinates:[1.9,-76]},KE:{label:'Kenya',coordinates:[-.5,37.3]},RW:{label:'Rwanda',coordinates:[-2.3,29.1]},GT:{label:'Guatemala',coordinates:[14.56,-90.73]},CR:{label:'Costa Rica',coordinates:[9.66,-84.02]},PE:{label:'Peru',coordinates:[-5.15,-78.99]},ID:{label:'Indonezia',coordinates:[4.6,96.8]},PA:{label:'Panama',coordinates:[8.78,-82.43]},BI:{label:'Burundi',coordinates:[-2.92,29.62]},HN:{label:'Honduras',coordinates:[14.15,-88.03]},SV:{label:'El Salvador',coordinates:[13.86,-89.8]},MX:{label:'Mexic',coordinates:[15.5,-92.6]},TZ:{label:'Tanzania',coordinates:[-3.33,37.34]},IN:{label:'India',coordinates:[12.5,75.2]}
+};
+export const projectOrigin=([lat,lon]:[number,number]):[number,number]=>[(lon+180)*1000/360,(85-lat)*1000/360+12];
+export const originCodes=(c:{countryCode?:string;id:string})=>c.countryCode==='MIX'||c.id==='origin-house-blend'?['BR','CO']:originRegions[c.countryCode||'']?[c.countryCode!]:[];
+export const originZoom=(code:string)=>['BR','CO','GT','CR','PE','PA','HN','SV','MX'].includes(code)?'americas':['ID','IN'].includes(code)?'asia':'africa';
+export const mapViews:Record<string,{label:string;box:string}>={world:{label:'Toată lumea',box:'0 0 1000 430'},americas:{label:'Americi',box:'190 165 350 151'},africa:{label:'Africa de Est',box:'445 190 280 121'},asia:{label:'Asia',box:'660 170 250 108'}};

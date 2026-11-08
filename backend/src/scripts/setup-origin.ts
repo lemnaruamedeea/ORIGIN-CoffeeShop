@@ -1,0 +1,6 @@
+import {ensureGuestCheckoutStorage} from '../lib/origin-guest-checkout';
+import {ensureOrderMailStorage} from '../lib/origin-order-mail';
+import {ensureWelcomeStorage} from '../lib/origin-welcome';
+import type {ExecArgs} from '@medusajs/framework/types';
+import {ContainerRegistrationKeys} from '@medusajs/framework/utils';
+export default async function setupOrigin({container}:ExecArgs){const db:any=container.resolve(ContainerRegistrationKeys.PG_CONNECTION);if(!await db.schema.hasTable('origin_experience'))await db.schema.createTable('origin_experience',(table:any)=>{table.string('id',64).primary();table.jsonb('data').notNullable();table.timestamp('updated_at',{useTz:true}).notNullable().defaultTo(db.fn.now());});if(!await db.schema.hasTable('origin_customer_sessions'))await db.schema.createTable('origin_customer_sessions',(table:any)=>{table.string('id',64).primary();table.string('customer_id').notNullable().index();table.timestamp('expires_at',{useTz:true}).notNullable().index();table.timestamp('created_at',{useTz:true}).notNullable().defaultTo(db.fn.now());});await ensureWelcomeStorage(db);await ensureGuestCheckoutStorage(db);await ensureOrderMailStorage(db);container.resolve(ContainerRegistrationKeys.LOGGER).info('Origin experience and customer session storage ready.');}

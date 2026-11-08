@@ -1,0 +1,9 @@
+import React from 'react';
+import {type Coffee} from '../domain';
+export function CoffeeFacts({coffee}:{coffee:Coffee}){
+ if(['Accesoriu','Set degustare'].includes(coffee.kind||''))return <div className="coffee-facts accessory-facts"><h3>Detalii pentru ritualul tău</h3><dl>{Object.entries({'Categorie':coffee.accessoryCategory,'Marcă':coffee.producer,'Unitate de vânzare':coffee.unit,...coffee.specifications}).filter(([,value])=>value).map(([label,value])=><div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl><div className="coffee-preparation"><b>Metode compatibile</b><p>{coffee.methods.join(' · ')}</p><b>Întreținere</b><p>{coffee.care}</p></div></div>;
+ const levels=['','Redusă','Medie','Ridicată'],bodies=['','Lejer','Mediu','Plin'];
+
+ const fields=[['Țara de origine',coffee.origin],['Regiune',coffee.region],['Fermă / stație',coffee.farm],['Producător',coffee.producer],['Altitudine',coffee.altitude],['Varietate',(coffee.varieties||[]).join(', ')],['Procesare',coffee.process],['Prăjire',coffee.roast.replace('Prăjire ','')],['Recoltă',coffee.harvest],['Prăjitorie',coffee.roaster],['Tip',coffee.kind],['Lot',coffee.lot]].filter(([,value])=>value);
+ return <div className="coffee-facts"><div className="coffee-sensory"><span>Aciditate <b>{levels[coffee.acidity]}</b></span><span>Corp <b>{bodies[coffee.body||2]}</b></span><span>Cofeină <b>{coffee.decaf?'Decofeinizată':'Cu cofeină'}</b></span></div><h3>Povestea lotului, pe scurt</h3><dl>{fields.map(([label,value])=><div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl><div className="coffee-preparation"><b>Cum o poți prepara</b><p>{coffee.methods.join(' · ')}</p><small>Experimentează în Brew Lab cu apa, măcinătura și filtrul ales. Gustă și păstrează combinația care îți place.</small>{coffee.decaf&&<small>Decofeinizată nu înseamnă absența absolută a cofeinei.</small>}</div></div>;
+}

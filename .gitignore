@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.medusa/
+.netlify/
+.env*
+!.env.example
+*.log
+*.tsbuildinfo
+**/qa/
+**/pgdata/
+**/postgres-local/
+**/db-password.txt
+**/*.sql
+**/__pycache__/

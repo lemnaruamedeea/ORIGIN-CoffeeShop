@@ -1,0 +1,242 @@
+[
+  {
+    "title": "Dripper ceramic 02",
+    "handle": "dripper-ceramic-02",
+    "category": "Drippere",
+    "art": "dripper",
+    "price": 89,
+    "stock": 18,
+    "weight": 350,
+    "unit": "1 bucată",
+    "methods": [
+      "V60"
+    ],
+    "producer": "ORIGIN Studio",
+    "material": "Ceramică glazurată",
+    "capacity": "1–4 cești",
+    "compatibility": "Filtre conice mărimea 02",
+    "included": "1 dripper ceramic",
+    "care": "Spală manual cu apă caldă; evită șocurile termice.",
+    "description": "Un dripper ceramic cu nervuri interioare și orificiu central, pentru controlul turnării și o extracție uniformă. Ceramica păstrează căldura după preîncălzire. Potrivit pentru prepararea manuală la filtru, acasă sau la birou. Se așază pe o cană sau pe o carafă cu deschidere potrivită. Filtrele se achiziționează separat.",
+    "features": [
+      "Ceramică",
+      "1–4 cești",
+      "Filtre 02"
+    ],
+    "color": "#7a7961",
+    "sku": "DRIPPER-CERAMIC-02",
+    "demo": true,
+    "image": "dripper-ceramic-02-studio.webp"
+  },
+  {
+    "title": "Filtre conice 02 — 100 bucăți",
+    "handle": "filtre-conice-02",
+    "category": "Filtre",
+    "art": "filters",
+    "price": 29,
+    "stock": 48,
+    "weight": 130,
+    "unit": "1 set · 100 filtre",
+    "methods": [
+      "V60"
+    ],
+    "producer": "ORIGIN Studio",
+    "material": "Hârtie albă pentru filtrare",
+    "capacity": "100 filtre / pachet",
+    "compatibility": "Drippere conice mărimea 02",
+    "included": "100 filtre din hârtie",
+    "care": "Păstrează pachetul închis, într-un loc uscat, fără mirosuri.",
+    "description": "Filtre din hârtie pentru drippere conice mărimea 02. Rețin particulele fine și contribuie la o ceașcă limpede. Înainte de preparare, clătește filtrul cu apă fierbinte pentru a-l fixa în dripper și pentru a preîncălzi recipientul. Pachetul conține 100 de filtre de unică folosință; nu este compatibil cu suporturile pentru filtre plate.",
+    "features": [
+      "100 bucăți",
+      "Format conic",
+      "Mărimea 02"
+    ],
+    "color": "#7a7961",
+    "sku": "FILTRE-CONICE-02",
+    "demo": true,
+    "image": "filtre-conice-02-studio.webp"
+  },
+  {
+    "title": "Râșniță manuală Atlas",
+    "handle": "rasnita-manuala-atlas",
+    "category": "Râșnițe",
+    "art": "grinder",
+    "price": 249,
+    "stock": 12,
+    "weight": 620,
+    "unit": "1 bucată",
+    "methods": [
+      "V60",
+      "AeroPress",
+      "French Press",
+      "Moka"
+    ],
+    "producer": "ORIGIN Studio",
+    "material": "Corp din aluminiu; cuțite din oțel inoxidabil",
+    "capacity": "25 g boabe",
+    "compatibility": "Preparare manuală; reglaj în trepte",
+    "included": "Râșniță, manivelă, recipient și perie",
+    "care": "Curăță uscat cu peria; nu scufunda mecanismul în apă.",
+    "description": "O râșniță manuală compactă, cu cuțite conice și reglaj în trepte, pentru cafea proaspăt măcinată. Recipientul poate primi până la 25 g de boabe. Mânerul detașabil o face ușor de transportat. Potrivită pentru filtru, AeroPress, Moka și French Press; nu este destinată reglajelor fine cerute de espressoarele profesionale.",
+    "features": [
+      "Cuțite conice",
+      "Capacitate 25 g",
+      "Reglaj în trepte"
+    ],
+    "color": "#7a7961",
+    "sku": "RASNITA-MANUALA-ATLAS",
+    "demo": true,
+    "image": "rasnita-manuala-atlas-studio.webp"
+  },
+  {
+    "title": "Fierbător Gooseneck 1 L",
+    "handle": "fierbator-gooseneck",
+    "category": "Fierbătoare",
+    "art": "kettle",
+    "price": 189,
+    "stock": 15,
+    "weight": 560,
+    "unit": "1 bucată",
+    "methods": [
+      "V60",
+      "AeroPress",
+      "French Press"
+    ],
+    "producer": "ORIGIN Studio",
+    "material": "Oțel inoxidabil; mâner termoizolant",
+    "capacity": "1 L nominal · 800 ml util",
+    "compatibility": "Plită cu gaz, electrică sau inducție",
+    "included": "Fierbător cu capac; fără bază electrică",
+    "care": "Spală manual și detartrează periodic; nu încălzi recipientul gol.",
+    "description": "Fierbător pentru plită cu gât îngust, conceput pentru turnare lentă și precisă. Forma ciocului ajută la distribuirea apei pe patul de cafea în timpul preparării la filtru. Are capacitate nominală de 1 L, cu umplere recomandată de maximum 800 ml. Nu este electric și nu reglează temperatura; verifică temperatura separat înainte de turnare.",
+    "features": [
+      "Turnare precisă",
+      "Pentru plită",
+      "800 ml util"
+    ],
+    "color": "#7a7961",
+    "sku": "FIERBATOR-GOOSENECK",
+    "demo": true,
+    "image": "fierbator-gooseneck-studio.webp"
+  },
+  {
+    "title": "Cântar Brew Precision",
+    "handle": "cantar-brew-precision",
+    "category": "Cântare",
+    "art": "scale",
+    "price": 169,
+    "stock": 20,
+    "weight": 330,
+    "unit": "1 bucată",
+    "methods": [
+      "V60",
+      "Espresso",
+      "AeroPress"
+    ],
+    "producer": "ORIGIN Studio",
+    "material": "Platformă ABS cu protecție din silicon",
+    "capacity": "0,1 g–2.000 g · rezoluție 0,1 g",
+    "compatibility": "Recipiente cu bază de până la 12 × 12 cm",
+    "included": "Cântar, protecție silicon și cablu USB-C",
+    "care": "Șterge cu o lavetă ușor umedă; nu scufunda și nu încărca umed.",
+    "description": "Cântar digital cu cronometru și funcție de tarare, pentru repetarea rețetelor de cafea. Rezoluția de 0,1 g ajută la dozarea boabelor și la urmărirea apei turnate. Platforma de 12 × 12 cm primește căni și carafe compacte. Se încarcă prin USB-C; adaptorul de priză nu este inclus. Rezoluția afișajului nu reprezintă o certificare metrologică.",
+    "features": [
+      "Cronometru",
+      "Rezoluție 0,1 g",
+      "Încărcare USB-C"
+    ],
+    "color": "#7a7961",
+    "sku": "CANTAR-BREW-PRECISION",
+    "demo": true,
+    "image": "cantar-brew-precision-studio.webp"
+  },
+  {
+    "title": "French Press 600 ml",
+    "handle": "french-press-600",
+    "category": "Prese de cafea",
+    "art": "frenchpress",
+    "price": 119,
+    "stock": 16,
+    "weight": 480,
+    "unit": "1 bucată",
+    "methods": [
+      "French Press"
+    ],
+    "producer": "ORIGIN Studio",
+    "material": "Sticlă borosilicată; filtru din oțel inoxidabil",
+    "capacity": "600 ml nominal · 500 ml util",
+    "compatibility": "Măcinătură grosieră; fără filtre de hârtie",
+    "included": "Recipient, suport, capac și piston cu filtru",
+    "care": "Desfă filtrul pentru curățare; spală manual și evită loviturile.",
+    "description": "Presă de cafea pentru o ceașcă cu textură bogată, preparată prin imersie. Recipientul transparent permite urmărirea infuzării, iar filtrul metalic se reutilizează. Capacitatea utilă de 500 ml lasă spațiu pentru cafea și piston. Folosește o măcinătură grosieră și apasă lent; pentru siguranță, nu forța pistonul și nu umple până la margine.",
+    "features": [
+      "Filtru reutilizabil",
+      "500 ml util",
+      "Sticlă borosilicată"
+    ],
+    "color": "#7a7961",
+    "sku": "FRENCH-PRESS-600",
+    "demo": true,
+    "image": "french-press-600-studio.webp"
+  },
+  {
+    "title": "Carafă de servire 600 ml",
+    "handle": "carafa-servire-600",
+    "category": "Carafe",
+    "art": "server",
+    "price": 79,
+    "stock": 22,
+    "weight": 290,
+    "unit": "1 bucată",
+    "methods": [
+      "V60",
+      "AeroPress"
+    ],
+    "producer": "ORIGIN Studio",
+    "material": "Sticlă borosilicată; capac din silicon",
+    "capacity": "600 ml nominal · 500 ml util",
+    "compatibility": "Drippere conice; deschidere de 8 cm",
+    "included": "Carafă și capac",
+    "care": "Spală manual; nu așeza pe flacără și evită șocurile termice.",
+    "description": "Carafă transparentă pentru prepararea și servirea cafelei la filtru. Marcajele de volum sunt orientative; pentru rețete precise folosește un cântar. Capacul limitează pierderea căldurii între turnări, iar mânerul oferă o prindere comodă. Verifică stabilitatea dripperului pe deschiderea de 8 cm înainte de a începe prepararea.",
+    "features": [
+      "Capac inclus",
+      "500 ml util",
+      "Deschidere 8 cm"
+    ],
+    "color": "#7a7961",
+    "sku": "CARAFA-SERVIRE-600",
+    "demo": true,
+    "image": "carafa-servire-600-studio.webp"
+  },
+  {
+    "title": "Tamper espresso 58 mm",
+    "handle": "tamper-espresso-58",
+    "category": "Ustensile espresso",
+    "art": "tamper",
+    "price": 99,
+    "stock": 14,
+    "weight": 410,
+    "unit": "1 bucată",
+    "methods": [
+      "Espresso"
+    ],
+    "producer": "ORIGIN Studio",
+    "material": "Bază din oțel inoxidabil; mâner din lemn",
+    "capacity": "Diametru bază 58 mm",
+    "compatibility": "Site de portafiltru de 58 mm; verifică diametrul interior",
+    "included": "1 tamper",
+    "care": "Șterge baza după utilizare; păstrează mânerul din lemn uscat.",
+    "description": "Tamper cu bază plană din oțel inoxidabil pentru tasarea cafelei în sita portafiltrului. Mânerul din lemn oferă o prindere comodă și controlul presiunii manuale. Baza are diametrul de 58 mm: verifică dimensiunea interioară a sitei, deoarece nu se potrivește tuturor espressoarelor. Nu este un model cu arc sau cu presiune calibrată.",
+    "features": [
+      "Bază plană",
+      "Diametru 58 mm",
+      "Mâner din lemn"
+    ],
+    "color": "#7a7961",
+    "sku": "TAMPER-ESPRESSO-58",
+    "demo": true,
+    "image": "tamper-espresso-58-studio.webp"
+  }
+]
