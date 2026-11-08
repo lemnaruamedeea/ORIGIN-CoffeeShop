@@ -20,7 +20,7 @@ export default async function expandAccessories({container}:ExecArgs){
  for(const c of items){
   const present=existing.find((p:any)=>p.handle===c.handle);
   if(present&&!present.metadata?.demo)continue;
-  const image=`${process.env.ORIGIN_ASSET_BASE_URL||'http://127.0.0.1:9000'}/static/${c.image||c.handle+'.svg'}`;
+  const image=`${process.env.ORIGIN_ASSET_BASE_URL||process.env.RENDER_EXTERNAL_URL||''}/static/${c.image||c.handle+'.svg'}`;
   const metadata={...(present?.metadata||{}),demo:true,catalog_source:'origin-accessories',product_type:'accessory',imagine_produs:c.image||c.handle+'.svg',tip_cafea:'Accesoriu',categorie_accesoriu:c.category,unitate:c.unit,producator:c.producer,preparare:c.methods.join(' / '),caracteristici:c.features,note_aromatice:c.features.join(', '),culoare:c.color,specificatii:{Material:c.material,Capacitate:c.capacity,Compatibilitate:c.compatibility,'În pachet':c.included},intretinere:c.care};
   const details={title:c.title,subtitle:c.features.join(' · '),description:c.description,metadata,category_ids:[category.id],thumbnail:image,images:[{url:image}]};
   if(present){await updateProductsWorkflow(container).run({input:{products:[{id:present.id,...details}]}});updated++;}

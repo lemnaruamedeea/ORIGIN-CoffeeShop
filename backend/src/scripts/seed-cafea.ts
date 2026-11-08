@@ -394,8 +394,8 @@ export default async function seedDemoData({ container }: ExecArgs) {
     metadata: { origine: c.country, regiune: c.origin, procesare: c.process, prajire: c.roast, note_aromatice: c.notes, preparare: c.method, demo: true },
     options: [{title: "Gramaj", values: ["250 g", "1 kg"]}],
     variants: [
-      { title: "250 g", sku: `${c.code}-250`, manage_inventory: true, allow_backorder: false, options: {Gramaj: "250 g"}, prices: [{currency_code: "ron",amount:c.price}] },
-      { title: "1 kg", sku: `${c.code}-1000`, manage_inventory: true, allow_backorder: false, options: {Gramaj: "1 kg"}, prices: [{currency_code: "ron",amount:c.large}] },
+      { title: "250 g", weight:250, sku: `${c.code}-250`, manage_inventory: true, allow_backorder: false, options: {Gramaj: "250 g"}, prices: [{currency_code: "ron",amount:c.price}] },
+      { title: "1 kg", weight:1000, sku: `${c.code}-1000`, manage_inventory: true, allow_backorder: false, options: {Gramaj: "1 kg"}, prices: [{currency_code: "ron",amount:c.large}] },
     ],
     sales_channels: [{id: defaultSalesChannel[0].id}],
   })) } });
