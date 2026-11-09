@@ -1,3 +1,4 @@
+import {orderReward} from './origin-promotions';
 import {randomUUID,randomBytes} from 'node:crypto';
 import {ContainerRegistrationKeys} from '@medusajs/framework/utils';
 import {OriginError} from './origin-ai';
@@ -50,7 +51,8 @@ export async function customerSamples(scope:any,customerId:string,orderId?:strin
  if(orderId)query.where('s.order_id',orderId);
  const rows=await query.select('s.*').orderBy('s.created_at','desc').limit(150);
  const orders=[...new Set(rows.map((r:any)=>r.order_id))];const emails=orders.length?await db('origin_mail_outbox').whereIn('order_id',orders):[];
- return {samples:rows.map((s:any)=>({code:s.code,orderId:s.order_id,setIndex:s.set_index,slot:s.slot,note:s.note||'',revealed:!!s.revealed_at,coffee:s.revealed_at?s.snapshot:undefined})),mail:emails.map((m:any)=>({orderId:m.order_id,status:m.status==='sent'?'sent':'pending',sentAt:m.sent_at||null}))};
+ const reward=orderId?await orderReward(scope,orderId,customerId):null;
+ return {reward,samples:rows.map((s:any)=>({code:s.code,orderId:s.order_id,setIndex:s.set_index,slot:s.slot,note:s.note||'',revealed:!!s.revealed_at,coffee:s.revealed_at?s.snapshot:undefined})),mail:emails.map((m:any)=>({orderId:m.order_id,status:m.status==='sent'?'sent':'pending',sentAt:m.sent_at||null}))};
 }
 export async function revealSample(scope:any,customerId:string,raw:any){
  const code=typeof raw?.code==='string'?raw.code.trim().toUpperCase():'',note=typeof raw?.note==='string'?raw.note.trim():'';

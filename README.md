@@ -12,6 +12,7 @@ ORIGIN este un magazin online de cafea de specialitate și accesorii, în care d
 - **AI Barista** — un asistent care explică aromele, recomandă produse și te ajută să îți îmbunătățești prepararea.
 - **Jurnal și pașaport** — păstrează degustările, explorează originile pe hartă și deblochează insigne.
 - **Mystery Tasting** — descoperă trei mostre alese aleatoriu, folosind codurile primite prin e-mail după comandă.
+- **Promoții** — 10% la prima comandă, transport standard gratuit de la 180 lei după reduceri și un cod personal de 15% după achitarea unui set Mystery Tasting.
 - **Cont personal** — favorite, recenzii și istoricul comenzilor, cu posibilitatea de a comanda și fără cont.
 
 ## Tehnologii

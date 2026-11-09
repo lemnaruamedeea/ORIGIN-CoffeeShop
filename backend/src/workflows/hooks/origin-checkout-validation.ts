@@ -1,3 +1,4 @@
+import {validatePromotions} from '../../lib/origin-promotions';
 import {validateMysteryCart} from '../../lib/origin-mystery';
 import {completeCartWorkflow} from '@medusajs/core-flows';
 import {ContainerRegistrationKeys,MedusaError} from '@medusajs/framework/utils';
@@ -8,6 +9,7 @@ import {paymentConfig} from '../../lib/origin-payments-config';
 completeCartWorkflow.hooks.validate(async({cart},{container})=>{
  const db:any=container.resolve(ContainerRegistrationKeys.PG_CONNECTION);
  await validateMysteryCart(container,cart);
+ await validatePromotions(container,cart);
  const row=await db('origin_checkouts').where({cart_id:cart.id}).first();
  if(!row||row.order_id)return;
  const deny=(message:string)=>{throw new MedusaError(MedusaError.Types.PAYMENT_AUTHORIZATION_ERROR,message);};

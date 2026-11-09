@@ -1,3 +1,4 @@
+import {setupPromotions} from '../lib/origin-promotions';
 import type {ExecArgs} from '@medusajs/framework/types';
 import {ContainerRegistrationKeys,Modules} from '@medusajs/framework/utils';
 import {createUsersWorkflow,updateProductsWorkflow} from '@medusajs/core-flows';
@@ -29,6 +30,7 @@ export default async function initialize(args:ExecArgs){
   }
   await db('origin_deployment_state').insert({id:'hosted-assets-v2'}).onConflict('id').ignore();
  }
+ await setupPromotions(container);
  const email=process.env.ADMIN_EMAIL,password=process.env.ADMIN_PASSWORD;
  if(email&&password){
   const auth=container.resolve(Modules.AUTH),users=container.resolve(Modules.USER);let user=(await users.listUsers({email}))[0];

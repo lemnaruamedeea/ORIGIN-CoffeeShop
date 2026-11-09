@@ -1,3 +1,5 @@
+import {refreshPromotions,validatePromotions,FREE_SHIPPING_MINIMUM} from './origin-promotions';
+import {promotionTotals,freeShipping,netItems} from './origin-promotions-core';
 import {guestCheckoutCustomer} from './origin-guest-checkout';
 import {queueOrderConfirmation} from './origin-order-mail';
 import {isMystery} from './origin-mystery-core';
@@ -48,14 +50,14 @@ async function ownedRow(req:any,customerId:string,id:string){
  const row=await dbOf(req)('origin_checkouts').where({cart_id:id,customer_id:customerId}).first();
  if(!row)throw error(404,'checkout_not_found','Checkout-ul nu există.');return row;
 }
-const cartFields=['id','customer_id','email','completed_at','currency_code','total','original_item_subtotal','original_shipping_subtotal','tax_total','discount_subtotal','metadata','shipping_address.*','items.id','items.title','items.product_title','items.variant_title','items.variant_id','items.quantity','items.original_subtotal','items.metadata','shipping_methods.id','shipping_methods.name','shipping_methods.shipping_option_id','shipping_methods.amount','payment_collection.id','payment_collection.status','payment_collection.payment_sessions.id','payment_collection.payment_sessions.provider_id','payment_collection.payment_sessions.status','payment_collection.payment_sessions.data'];
+const cartFields=['id','customer_id','email','completed_at','currency_code','total','original_item_subtotal','original_shipping_subtotal','tax_total','discount_subtotal','item_subtotal','shipping_subtotal','metadata','shipping_address.*','items.id','items.title','items.product_title','items.variant_title','items.variant_id','items.quantity','items.original_subtotal','items.metadata','items.adjustments.*','shipping_methods.id','shipping_methods.name','shipping_methods.shipping_option_id','shipping_methods.amount','shipping_methods.adjustments.*','payment_collection.id','payment_collection.status','payment_collection.payment_sessions.id','payment_collection.payment_sessions.provider_id','payment_collection.payment_sessions.status','payment_collection.payment_sessions.data'];
 async function nativeCart(req:any,id:string){const {data}=await queryOf(req).graph({entity:'cart',fields:cartFields,filters:{id}});if(!data[0])throw error(404,'checkout_not_found','Checkout-ul nu există.');return data[0];}
 function itemsView(items:any[]){return (items||[]).filter(i=>!i.metadata?.origin_mystery_component).map(i=>({id:i.id,coffeeId:i.metadata?.coffee_id||null,title:i.product_title||i.title,variant:i.variant_title,quantity:Number(i.quantity),unitPrice:Number(i.original_subtotal)/Number(i.quantity),total:Number(i.original_subtotal),grind:i.metadata?.grind||'Boabe',mystery:i.metadata?.origin_mystery_set===true,weight:Number(i.metadata?.weight)||null}));}
 async function viewCart(req:any,row:any){
  const c=await nativeCart(req,row.cart_id);
  const {result:shipping}=await listShippingOptionsForCartWithPricingWorkflow(req.scope).run({input:{cart_id:c.id}});
  const active=c.payment_collection?.payment_sessions?.find((p:any)=>p.provider_id===(row.payment_method==='stripe'?'pp_stripe_stripe':'pp_system_default')&&!['canceled','error'].includes(p.status));
- return {id:c.id,orderId:row.order_id||null,completed:!!c.completed_at,currency:c.currency_code,email:c.email,address:c.shipping_address,items:itemsView(c.items),subtotal:Number(c.original_item_subtotal),shipping:Number(c.original_shipping_subtotal),tax:Number(c.tax_total),discount:Number(c.discount_subtotal),total:Number(c.total),shippingOptionId:c.shipping_methods?.[0]?.shipping_option_id||null,shippingOptions:shipping.filter((s:any)=>Number.isFinite(Number(s.amount))).map((s:any)=>({id:s.id,name:s.type?.code==='express'?'Curier express':'Curier standard',description:s.type?.code==='express'?'Estimativ 1–2 zile lucrătoare':'Estimativ 2–3 zile lucrătoare',amount:Number(s.amount)})),paymentMethod:row.payment_method||null,clientSecret:row.payment_method==='stripe'?active?.data?.client_secret||null:null};
+ return {id:c.id,orderId:row.order_id||null,completed:!!c.completed_at,currency:c.currency_code,email:c.email,address:c.shipping_address,items:itemsView(c.items),...promotionTotals(c),promotionCode:row.promotion_code||null,freeShippingThreshold:FREE_SHIPPING_MINIMUM,freeShippingRemaining:Math.max(0,Math.round((FREE_SHIPPING_MINIMUM-netItems(c))*100)/100),shippingOptionId:c.shipping_methods?.[0]?.shipping_option_id||null,shippingOptions:shipping.filter((s:any)=>Number.isFinite(Number(s.amount))).map((s:any)=>({id:s.id,name:s.type?.code==='express'?'Curier express':'Curier standard',description:s.type?.code==='express'?'Estimativ 1–2 zile lucrătoare':'Estimativ 2–3 zile lucrătoare',amount:freeShipping(netItems(c))&&s.type?.code!=='express'?0:Number(s.amount)})),paymentMethod:row.payment_method||null,clientSecret:row.payment_method==='stripe'?active?.data?.client_secret||null:null};
 }
 export async function createCheckout(req:any,customer:any){
  const {requestId,items}=req.body||{};
@@ -95,11 +97,13 @@ export async function activeCheckout(req:any,customerId:string){const row=await 
 export async function changeShipping(req:any,customerId:string,id:string){
  await ownedRow(req,customerId,id);
  return dbOf(req).transaction(async(trx:any)=>{
+  await trx.raw('SELECT pg_advisory_xact_lock(hashtextextended(?, 0))',[id]);
   const row=await trx('origin_checkouts').where({cart_id:id,customer_id:customerId}).forUpdate().first();
   if(row.payment_method||row.order_id)throw error(409,'checkout_locked','Livrarea este deja confirmată. Reia checkout-ul pentru alte date.');
   const {result:options}=await listShippingOptionsForCartWithPricingWorkflow(req.scope).run({input:{cart_id:id}});
   if(!options.some((o:any)=>o.id===req.body?.optionId))throw error(400,'invalid_shipping','Alege o opțiune de livrare disponibilă.');
   await addShippingMethodToCartWorkflow(req.scope).run({input:{cart_id:id,options:[{id:req.body.optionId}]}});
+  await refreshPromotions(req.scope,id,row.promotion_code||'');
   return viewCart(req,row);
  });
 }
@@ -109,10 +113,13 @@ export async function preparePayment(req:any,customer:any,id:string){
  if(!['cash','stripe'].includes(method))throw error(400,'invalid_payment','Alege o metodă de plată validă.');
  if(method==='stripe'&&!(await checkoutOptions(req)).stripeAvailable)throw error(503,'stripe_not_configured','Plata cu cardul nu este disponibilă momentan. Alege ramburs sau revino mai târziu.');
  return dbOf(req).transaction(async(trx:any)=>{
+  await trx.raw('SELECT pg_advisory_xact_lock(hashtextextended(?, 0))',[id]);
   const row=await trx('origin_checkouts').where({cart_id:id,customer_id:customer.id}).forUpdate().first();
   if(row.order_id)return viewCart(req,row);
   if(row.payment_method&&row.payment_method!==method)throw error(409,'checkout_locked','Metoda a fost confirmată. Reia checkout-ul pentru altă metodă de plată.');
+  if(!row.payment_method)await refreshPromotions(req.scope,id,row.promotion_code||'');
   let cart=await nativeCart(req,id);
+  await validatePromotions(req.scope,cart);
   if(!cart.shipping_methods?.length)throw error(400,'shipping_required','Alege livrarea înainte de plată.');
   if(!cart.payment_collection?.id){await createPaymentCollectionForCartWorkflow(req.scope).run({input:{cart_id:id}});cart=await nativeCart(req,id);}
   // Freeze shipping before creating the provider session, so its amount cannot go stale.
@@ -126,6 +133,7 @@ export async function preparePayment(req:any,customer:any,id:string){
 export async function finishCheckout(req:any,customerId:string,id:string){
  await ownedRow(req,customerId,id);
  const orderId=await dbOf(req).transaction(async(trx:any)=>{
+  await trx.raw('SELECT pg_advisory_xact_lock(hashtextextended(?, 0))',[id]);
   const row=await trx('origin_checkouts').where({cart_id:id,customer_id:customerId}).forUpdate().first();
   if(row.order_id)return row.order_id;
   if(!row.payment_method)throw error(400,'payment_required','Confirmă metoda de plată înainte de comandă.');
@@ -142,14 +150,14 @@ export async function finishCheckout(req:any,customerId:string,id:string){
  await deliverSampleMail(req.scope,orderId).catch(()=>{});
  return getOrder(req,customerId,orderId);
 }
-const orderFields=['id','customer_id','display_id','status','created_at','currency_code','email','total','original_item_subtotal','original_shipping_subtotal','tax_total','discount_subtotal','shipping_address.*','items.id','items.title','items.product_title','items.variant_title','items.quantity','items.original_subtotal','items.metadata','payment_collections.status','payment_collections.payments.captured_at','payment_collections.payments.canceled_at','fulfillments.shipped_at','fulfillments.delivered_at','fulfillments.canceled_at'];
+const orderFields=['id','customer_id','display_id','status','created_at','currency_code','email','total','original_item_subtotal','original_shipping_subtotal','tax_total','discount_subtotal','shipping_subtotal','shipping_address.*','items.id','items.title','items.product_title','items.variant_title','items.quantity','items.original_subtotal','items.metadata','items.adjustments.*','shipping_methods.adjustments.*','payment_collections.status','payment_collections.payments.captured_at','payment_collections.payments.canceled_at','fulfillments.shipped_at','fulfillments.delivered_at','fulfillments.canceled_at'];
 function orderView(order:any,checkout:any){
  const cash=checkout?.payment_method==='cash';
  const canceled=order.status==='canceled';
  const captured=order.payment_collections?.some((p:any)=>p.status==='completed');
  const payment=cash?(captured?'cash_paid':'cash_due'):captured?'paid':order.payment_collections?.some((p:any)=>p.status==='authorized')?'authorized':'pending';
  const fulfillment=order.fulfillments?.filter((f:any)=>!f.canceled_at)||[];
- return {id:order.id,number:order.display_id,status:order.status,createdAt:order.created_at,currency:order.currency_code,email:order.email,items:itemsView(order.items),address:order.shipping_address,subtotal:Number(order.original_item_subtotal),shipping:Number(order.original_shipping_subtotal),tax:Number(order.tax_total),discount:Number(order.discount_subtotal),total:Number(order.total),paymentMethod:cash?'cash':'stripe',paymentStatus:canceled?'canceled':payment,deliveryStatus:canceled?'canceled':fulfillment.some((f:any)=>f.delivered_at)?'delivered':fulfillment.some((f:any)=>f.shipped_at)?'shipped':'processing',testMode:true};
+ return {id:order.id,number:order.display_id,status:order.status,createdAt:order.created_at,currency:order.currency_code,email:order.email,items:itemsView(order.items),address:order.shipping_address,...promotionTotals(order),promotionCode:checkout?.promotion_code||null,paymentMethod:cash?'cash':'stripe',paymentStatus:canceled?'canceled':payment,deliveryStatus:canceled?'canceled':fulfillment.some((f:any)=>f.delivered_at)?'delivered':fulfillment.some((f:any)=>f.shipped_at)?'shipped':'processing',testMode:true};
 }
 export async function getOrder(req:any,customerId:string,id:string){
  if(!/^[a-zA-Z0-9_-]{8,100}$/.test(id))throw error(404,'order_not_found','Comanda nu există.');
